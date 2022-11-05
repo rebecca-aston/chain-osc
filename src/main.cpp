@@ -19,7 +19,7 @@ int main( ){
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
     
     //mouth window size / placement
-    settings.setSize(300, 300);
+    settings.setSize(200, 300);
     settings.decorated = true;
     settings.setPosition(ofVec2f(0,0));
     settings.resizable = false;
@@ -29,7 +29,7 @@ int main( ){
     mouthWindow->setVerticalSync(false);
     
     //eye window size / placement
-    settings.setSize(300, 300);
+    settings.setSize(600, 200);
     settings.decorated = true;
     settings.setPosition(ofVec2f(0,0));
     settings.resizable = false;
@@ -49,7 +49,7 @@ int main( ){
     earWindow->setVerticalSync(false);
     
     //stomach window size / placement
-    settings.setSize(300, 300);
+    settings.setSize(1920*0.3, 1080*0.3);
     settings.decorated = true;
     settings.setPosition(ofVec2f(0,0));
     settings.resizable = false;

@@ -27,12 +27,19 @@ class ofApp : public ofBaseApp {
     
         deque<string> earMessageBuffer;
         deque<string> eyeMessageBuffer;
-        deque<string> mouthMessageBuffer;
-        deque<string> stomachMessageBuffer;
+//        deque<float> mouthMessageBuffer;
+//        deque<float> stomachMessageBuffer;
+        float mouthMessage;
+        float stomachMessageX;
+        float stomachMessageY;
+        float stomachMessageM;
     
         bool earIsSending;
         bool eyeIsSending;
         bool mouthIsSending;
         bool stomachIsSending;
+    
+        ofTrueTypeFont font;
+        float fontSize;
     
 };
