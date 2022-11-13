@@ -2,6 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofSetFrameRate(30);
 	// listen on the given port
 	cout << "listening for osc messages on port " << PORT << "\n";
 	receiver.setup(PORT);
@@ -217,7 +218,7 @@ void ofApp::drawEye(ofEventArgs & args){
     
     //pop back messages once there are more than can be displayed
     float messagePxHeight = eyeMessageBuffer.size() * (fontSize*1.2);
-    if(messagePxHeight > ofGetHeight()){
+    if(eyeMessageBuffer.size() > 7){
         eyeMessageBuffer.pop_back();
     }
 }
@@ -284,7 +285,6 @@ string ofApp::wrapString(string text, int width) {
         if(stringwidth >= width) {
             tempString = "";
             typeWrapped += "\n";
-            sHeight ++;
         }
           
         typeWrapped += wrd + " ";
