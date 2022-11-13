@@ -2,7 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetFrameRate(30);
+    ofSetFrameRate(60);
 	// listen on the given port
 	cout << "listening for osc messages on port " << PORT << "\n";
 	receiver.setup(PORT);
@@ -35,29 +35,10 @@ void ofApp::update(){
 		// get the next message
 		ofxOscMessage m;
 		receiver.getNextMessage(m);
+        
+        string address = m.getAddress();
 
-        if(m.getAddress().find("ear") != string::npos) {
-            
-            earIsSending = true;
-            
-            vector<string> s = ofSplitString(m.getArgAsString(0),",");
-            
-            ofColor newColor = ofColor(ofToInt(s[0]),ofToInt(s[1]),ofToInt(s[2]));
-            
-            earColor = earColor.getLerped(newColor,0.9);
-            
-            // test
-            //ear message buffer
-//            earMessageBuffer.push_front(m.getAddress() + ": " + ofToString(m.getArgAsFloat(0)));
-        }else if(m.getAddress().find("eye") != string::npos) {
-                     
-            eyeIsSending = true;
-            
-            // test
-            //eye message buffer
-            eyeMessageBuffer.push_front( ofToString(m.getArgAsString(0)));
-            
-        }else if(m.getAddress().find("mouth") != string::npos) {
+        if(address == "/mouth") {
             
             mouthIsSending = true;
             
@@ -65,7 +46,7 @@ void ofApp::update(){
             
             // 0 - 1000
             
-            cout << m.getAddress() << endl;
+//            cout << m.getAddress() << endl;
             
             // test
             //mouth message buffer
@@ -73,7 +54,7 @@ void ofApp::update(){
             mouthMessage = m.getArgAsFloat(0);
 
             
-        }else if(m.getAddress().find("stomach") != string::npos) {
+        }else if(address == "/stomach/posX" || address == "/stomach/posY" || address == "/stomach/mvt" ) {
             
             stomachIsSending = true;
             
@@ -85,13 +66,33 @@ void ofApp::update(){
                 stomachMessageM = m.getArgAsFloat(0);
             }
 
-        }
-        else {
-            // unrecognized message: display on the bottom of the screen
+        }else if(address == "/ear/color") {
             
-            //chain message buffer
-           // messageBuffer.push_front(m.getAddress() + ": UNRECOGNIZED MESSAGE");
+            earIsSending = true;
+            
+            vector<string> s = ofSplitString(m.getArgAsString(0),",");
+            
+            ofColor newColor = ofColor(ofToInt(s[0]),ofToInt(s[1]),ofToInt(s[2]));
+            
+            earColor = earColor.getLerped(newColor,0.9);
+            
+            // test
+            //ear message buffer
+//            earMessageBuffer.push_front(m.getAddress() + ": " +   ofToString(m.getArgAsFloat(0)));
+        }else if(address == "/eye") {
+            
+            eyeIsSending = true;
+            
+            // test
+            //eye message buffer
+            eyeMessageBuffer.push_front( ofToString(m.getArgAsString(0)));
         }
+//         else {
+//            // unrecognized message: display on the bottom of the screen
+//
+//            //chain message buffer
+//           // messageBuffer.push_front(m.getAddress() + ": UNRECOGNIZED MESSAGE");
+//        }
 	}
 }
 
@@ -272,8 +273,6 @@ void ofApp::drawStomach(ofEventArgs & args){
 
 
 string ofApp::wrapString(string text, int width) {
-  
-    
     string typeWrapped = "";
     string tempString = "";
     vector <string> words = ofSplitString(text, " ");
@@ -293,5 +292,4 @@ string ofApp::wrapString(string text, int width) {
     }
       
     return typeWrapped;
-      
 }
