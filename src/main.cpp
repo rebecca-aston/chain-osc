@@ -23,6 +23,7 @@ int main( ){
     settings.decorated = true;
     settings.setPosition(ofVec2f(0,0));
     settings.resizable = false;
+    settings.title = "The Mouth";
     
     settings.shareContextWith = mainWindow;
     shared_ptr<ofAppBaseWindow> mouthWindow = ofCreateWindow(settings);
@@ -33,6 +34,7 @@ int main( ){
     settings.decorated = true;
     settings.setPosition(ofVec2f(0,0));
     settings.resizable = true;
+    settings.title = "The Eye";
     
     settings.shareContextWith = mainWindow;
     shared_ptr<ofAppBaseWindow> eyeWindow = ofCreateWindow(settings);
@@ -43,6 +45,7 @@ int main( ){
     settings.decorated = true;
     settings.setPosition(ofVec2f(0,0));
     settings.resizable = true;
+    settings.title = "The Ear";
     
     settings.shareContextWith = mainWindow;
     shared_ptr<ofAppBaseWindow> earWindow = ofCreateWindow(settings);
@@ -53,6 +56,7 @@ int main( ){
     settings.decorated = true;
     settings.setPosition(ofVec2f(0,0));
     settings.resizable = false;
+    settings.title = "The Stomach";
     
     settings.shareContextWith = mainWindow;
     shared_ptr<ofAppBaseWindow> stomachWindow = ofCreateWindow(settings);

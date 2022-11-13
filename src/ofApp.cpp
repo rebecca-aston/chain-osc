@@ -153,10 +153,10 @@ void ofApp::draw(){
 //    ofSetColor(255);
 //    font.drawString("Num messages: " + ofToString(messageBuffer.size()), 10, 20);
     //pop back messages once there are more than can be displayed
-    float messagePxHeight = messageBuffer.size() * (fontSize*1.2);
-    if(messagePxHeight > ofGetHeight()){
-        messageBuffer.pop_back();
-    }
+//    float messagePxHeight = messageBuffer.size() * (fontSize*1.2);
+//    if(messagePxHeight > ofGetHeight()){
+//        messageBuffer.pop_back();
+//    }
     
     
     //set them to false every frame so we get a flicker effect of data coming in
@@ -176,12 +176,12 @@ void ofApp::setupChain(){
 }
 void ofApp::drawMouth(ofEventArgs & args){
     //draw to other screen
-    ofSetWindowTitle("The Mouth");
+//    ofSetWindowTitle("The Mouth");
     ofBackground(30, 30, 130);
     
     font.drawString("Volume: " + ofToString(mouthMessage), 10, 20);
     
-    ofDrawRectangle(0,30,ofGetWidth(),ofMap(mouthMessage,0,100,0,ofGetHeight()));
+    ofDrawRectangle(0,30,ofGetWidth(),ofGetHeight()*mouthMessage);
     
     // read the buffer
 //    for(int i = 0; i < mouthMessageBuffer.size(); i++){
@@ -198,34 +198,36 @@ void ofApp::drawMouth(ofEventArgs & args){
 
 void ofApp::drawEye(ofEventArgs & args){
     //setup other screen
-    ofSetWindowTitle("The Eye");
+//    ofSetWindowTitle("The Eye");
     ofBackground(30, 30, 130);
     
 //    font.drawString("Num messages: " + ofToString(eyeMessageBuffer.size()), 10, 20);
     
-    
-    string s = "";
-    
-    for(int i = 0; i < eyeMessageBuffer.size(); i++){
- 
-         s += eyeMessageBuffer[i] + "\n";
-  
-     }
-    
-    string wrapped = wrapString(s, ofGetWidth()-200);
-    font.drawString(wrapped, 10, fontSize + 8);
-    
-    
-    //pop back messages once there are more than can be displayed
-    float messagePxHeight = eyeMessageBuffer.size() * (fontSize*1.2);
-    if(eyeMessageBuffer.size() > 7){
-        eyeMessageBuffer.pop_back();
+    if(eyeMessageBuffer.size() > 0){
+        string s = "";
+        
+        for(int i = 0; i < eyeMessageBuffer.size(); i++){
+     
+             s += eyeMessageBuffer[i] + "\n";
+      
+         }
+        
+        string wrapped = wrapString(s, ofGetWidth()-200);
+        font.drawString(wrapped, 10, fontSize + 8);
+        
+        
+        //pop back messages once there are more than can be displayed
+        float messagePxHeight = eyeMessageBuffer.size() * (fontSize*1.2);
+        if(eyeMessageBuffer.size() > 7){
+            eyeMessageBuffer.pop_back();
+        }
     }
+  
 }
 
 void ofApp::drawEar(ofEventArgs & args){
     //draw to other screen
-    ofSetWindowTitle("The Ear");
+//    ofSetWindowTitle("The Ear");
     ofBackground(earColor);
     
 //    font.drawString("Num messages: " + ofToString(earMessageBuffer.size()), 10, 20);
@@ -244,7 +246,7 @@ void ofApp::drawEar(ofEventArgs & args){
 
 void ofApp::drawStomach(ofEventArgs & args){
     //draw to other screen
-    ofSetWindowTitle("The Stomach");
+//    ofSetWindowTitle("The Stomach");
     ofBackground(30, 30, 130);
     
     font.drawString("Movement: " + ofToString(stomachMessageM), 10, 20);
