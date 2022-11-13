@@ -21,7 +21,10 @@ void ofApp::setup(){
 
     stomachMessageX = -20;
     stomachMessageY = -20;
-}
+    
+    earColor = ofColor(30, 30, 130);
+    
+} 
 
 //--------------------------------------------------------------
 void ofApp::update(){
@@ -36,9 +39,15 @@ void ofApp::update(){
             
             earIsSending = true;
             
+            vector<string> s = ofSplitString(m.getArgAsString(0),",");
+            
+            ofColor newColor = ofColor(ofToInt(s[0]),ofToInt(s[1]),ofToInt(s[2]));
+            
+            earColor = earColor.getLerped(newColor,0.9);
+            
             // test
             //ear message buffer
-            earMessageBuffer.push_front(m.getAddress() + ": " + ofToString(m.getArgAsFloat(0)));
+//            earMessageBuffer.push_front(m.getAddress() + ": " + ofToString(m.getArgAsFloat(0)));
         }else if(m.getAddress().find("eye") != string::npos) {
                      
             eyeIsSending = true;
@@ -193,10 +202,18 @@ void ofApp::drawEye(ofEventArgs & args){
     
 //    font.drawString("Num messages: " + ofToString(eyeMessageBuffer.size()), 10, 20);
     
-    // read the buffer
+    
+    string s = "";
+    
     for(int i = 0; i < eyeMessageBuffer.size(); i++){
-        font.drawString(eyeMessageBuffer[i], 10, 20 + (fontSize*1.2) * i);
-    }
+ 
+         s += eyeMessageBuffer[i] + "\n";
+  
+     }
+    
+    string wrapped = wrapString(s, ofGetWidth()-200);
+    font.drawString(wrapped, 10, fontSize + 8);
+    
     
     //pop back messages once there are more than can be displayed
     float messagePxHeight = eyeMessageBuffer.size() * (fontSize*1.2);
@@ -208,20 +225,20 @@ void ofApp::drawEye(ofEventArgs & args){
 void ofApp::drawEar(ofEventArgs & args){
     //draw to other screen
     ofSetWindowTitle("The Ear");
-    ofBackground(30, 30, 130);
+    ofBackground(earColor);
     
 //    font.drawString("Num messages: " + ofToString(earMessageBuffer.size()), 10, 20);
     
     // read the buffer
-    for(int i = 0; i < earMessageBuffer.size(); i++){
-        font.drawString(earMessageBuffer[i], 10, 20 + (fontSize*1.2) * i);
-    }
-    
-    //pop back messages once there are more than can be displayed
-    float messagePxHeight = earMessageBuffer.size() * (fontSize*1.2);
-    if(messagePxHeight > ofGetHeight()){
-        earMessageBuffer.pop_back();
-    }
+//    for(int i = 0; i < earMessageBuffer.size(); i++){
+//        font.drawString(earMessageBuffer[i], 10, 20 + (fontSize*1.2) * i);
+//    }
+//
+//    //pop back messages once there are more than can be displayed
+//    float messagePxHeight = earMessageBuffer.size() * (fontSize*1.2);
+//    if(messagePxHeight > ofGetHeight()){
+//        earMessageBuffer.pop_back();
+//    }
 }
 
 void ofApp::drawStomach(ofEventArgs & args){
@@ -248,4 +265,31 @@ void ofApp::drawStomach(ofEventArgs & args){
 //    if(messagePxHeight > ofGetHeight()){
 //        stomachMessageBuffer.pop_back();
 //    }
+}
+
+
+string ofApp::wrapString(string text, int width) {
+  
+    
+    string typeWrapped = "";
+    string tempString = "";
+    vector <string> words = ofSplitString(text, " ");
+      
+    for(int i=0; i<words.size(); i++) {
+  
+        string wrd = words[i];
+          
+        tempString += wrd + " ";
+        int stringwidth = font.stringWidth(tempString);
+        if(stringwidth >= width) {
+            tempString = "";
+            typeWrapped += "\n";
+            sHeight ++;
+        }
+          
+        typeWrapped += wrd + " ";
+    }
+      
+    return typeWrapped;
+      
 }

@@ -20,6 +20,8 @@ class ofApp : public ofBaseApp {
         void drawEye(ofEventArgs & args);
         void drawEar(ofEventArgs & args);
         void drawStomach(ofEventArgs & args);
+    
+        string wrapString(string text, int width);
 
 		ofxOscReceiver receiver;
     
@@ -34,6 +36,8 @@ class ofApp : public ofBaseApp {
         float stomachMessageY;
         float stomachMessageM;
     
+        ofColor earColor;
+    
         bool earIsSending;
         bool eyeIsSending;
         bool mouthIsSending;
@@ -41,5 +45,5 @@ class ofApp : public ofBaseApp {
     
         ofTrueTypeFont font;
         float fontSize;
-    
+        int sHeight;
 };
